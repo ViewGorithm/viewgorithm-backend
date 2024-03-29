@@ -14,7 +14,7 @@ import vigo.com.viewgorithm.algorithm.repository.AlgoCodesRepository;
 public class AlgorithmProvider {
 
     private final AlgoCategoryRepository categoryRepository;
-    private final AlgoCodesRepository codesRepository;
+    private final AlgoCodesRepository codesRepository; // mapper
 
     public AlgorithmCodesDto getAlgorithm_Codes(String algorithmName) {
 
