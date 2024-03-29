@@ -4,8 +4,8 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 @Getter
-@Entity
 @Setter
+@Entity
 public class AlgorithmCodes {
 
     @Id
@@ -25,7 +25,7 @@ public class AlgorithmCodes {
     private String java_code;
 
     @OneToOne
-    @JoinColumn(name = "algorithm_name")
-    private AlgorithmCategory algorithmCategory;
+    @JoinColumn(name = "algorithm_name", referencedColumnName = "algorithm_name", columnDefinition = "varchar(100)")
+    private AlgorithmCategory algorithmName;
 
 }

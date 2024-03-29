@@ -6,5 +6,6 @@ import vigo.com.viewgorithm.algorithm.domain.AlgorithmCodes;
 
 @Repository
 public interface AlgoCodesRepository extends JpaRepository<AlgorithmCodes, Long> {
-
+    AlgorithmCodes findByAlgorithmNameAlgorithmName(String algorithmName);
 }
+
