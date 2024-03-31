@@ -16,6 +16,8 @@ public class AlgorithmProvider {
     private final AlgoCategoryRepository categoryRepository;
     private final AlgoCodesRepository codesRepository; // mapper
 
+
+    // 알고리즘 코드 객체 제공 서비스
     public AlgorithmCodesDto getAlgorithm_Codes(String algorithmName) {
 
         AlgorithmCodes algorithmCodes = codesRepository.findByAlgorithmNameAlgorithmName(algorithmName);
