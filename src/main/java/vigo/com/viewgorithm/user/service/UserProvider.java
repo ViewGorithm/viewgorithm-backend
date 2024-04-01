@@ -13,16 +13,13 @@ import vigo.com.viewgorithm.user.repository.UserRepository;
 public class UserProvider {
 
     private final UserRepository userRepository;
-
     public String join(UserDto userDto){
 
         // username 중복 check -> repository 필요
         userRepository.findByName(userDto.getUserId())
                 .ifPresent(user -> {
-                    throw new RuntimeException(userDto.getUserId() + "은 이미 있습니다.");
-
+                    throw new RuntimeException(userDto.getUserId() + "is already exists");
                 });
-
         User user = User.builder()
                 .userId(userDto.getUserId())
                 .passWord(userDto.getPassWord())
@@ -34,7 +31,6 @@ public class UserProvider {
                 .build();
         // save
         userRepository.save(user);
-
         return "SUCCESS";
     }
 }
