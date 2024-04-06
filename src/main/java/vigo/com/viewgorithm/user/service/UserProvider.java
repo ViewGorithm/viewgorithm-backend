@@ -13,7 +13,7 @@ import vigo.com.viewgorithm.user.repository.UserRepository;
 public class UserProvider {
 
     private final UserRepository userRepository;
-    public String join(UserDto userDto){
+    public String userJoin(UserDto userDto){
 
         // username 중복 check -> repository 필요
         userRepository.findByName(userDto.getUserId())

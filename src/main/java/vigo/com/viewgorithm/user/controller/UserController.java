@@ -3,16 +3,12 @@ package vigo.com.viewgorithm.user.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import vigo.com.viewgorithm.user.dto.UserDto;
 import vigo.com.viewgorithm.user.service.UserProvider;
 
-@RestController
+@RestController // ResponseBody + Controller
 @RequiredArgsConstructor
-
 public class UserController {
 
     private final UserProvider userProvider;
@@ -22,6 +18,12 @@ public class UserController {
         userProvider.join(userDto);
 
         return ResponseEntity.ok().body("회원가입이 성공 했습니다.");
+    }
+
+    // 로그인 기능
+    @GetMapping("/")
+    public String mainP(){
+        return "Main Controller";
     }
 
 }

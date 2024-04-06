@@ -11,4 +11,10 @@ import java.util.Optional;
 @Repository
 public interface UserRepository extends JpaRepository<User,Long> {
     Optional<User> findByName(String userName);
+
+    // userId를 받아서 DB 테이블에서 회원을 조회하는 메소드 작성
+    User findByUserId(String userId);
+
+
+
 }
