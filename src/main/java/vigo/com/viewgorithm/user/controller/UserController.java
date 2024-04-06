@@ -15,7 +15,7 @@ public class UserController {
     @PostMapping("/user/join")
     public ResponseEntity<String> join(@RequestBody UserDto userDto){
 
-        userProvider.join(userDto);
+        userProvider.userJoin(userDto);
 
         return ResponseEntity.ok().body("회원가입이 성공 했습니다.");
     }
