@@ -17,14 +17,17 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
 
     @Override
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException {
+
+        // 여기부분이 문제.
         String userid = obtainUsername(request);
+
         String password = obtainPassword(request);
 
+
         System.out.println(userid);
+        // userid는 출력X
         System.out.println(password);
-
-
-
+        //password는 잘 출력
         UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(userid, password,null);
 
         return authenticationManager.authenticate(authToken);
@@ -33,14 +36,15 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
     // manage 검증 성공시 실행되는 메소드 (JWT 토큰 발급)
     @Override
     protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain, Authentication authentication) {
-
+        System.out.println("Login Success");
     }
 
     //로그인 실패시 실행하는 메소드
     @Override
     protected void unsuccessfulAuthentication(HttpServletRequest request, HttpServletResponse response, AuthenticationException failed) {
-
+        System.out.println("Login failed");
     }
+
 
 
 }
