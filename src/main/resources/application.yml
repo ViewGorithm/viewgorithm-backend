@@ -16,3 +16,5 @@ spring:
       #sql 초기화(실행) 관련 설정
 server:
   port: 8088
+
+
