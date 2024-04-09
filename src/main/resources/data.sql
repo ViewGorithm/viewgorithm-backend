@@ -9,6 +9,14 @@ values ("Merge", "Sort");
 insert into algorithm_category (algorithm_name, category_name)
 values ("Quick", "Sort");
 
+-- 로그인 Test (유저 아이디 insert문)
+insert into user (birth,created_at ,email,name,password,sex,user_id)
+values("1999-08-06",now(),"kuntek1953@naver.com", "이건택", "1111", "M", "kuntek1953");
+
+
+
+
+
 -- algorithm_code insert문
 
 
