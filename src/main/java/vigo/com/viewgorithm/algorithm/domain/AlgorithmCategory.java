@@ -11,7 +11,7 @@ import org.hibernate.annotations.Index;
 public class AlgorithmCategory {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long algorithm_category_pk;
 
     @Index(name = "algorithm_name")
     @Column(name = "algorithm_name")

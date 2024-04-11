@@ -10,7 +10,7 @@ public class AlgorithmCodes {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long algorithm_codes_pk;
 
     @Column(columnDefinition = "TEXT")
     private String c_code;

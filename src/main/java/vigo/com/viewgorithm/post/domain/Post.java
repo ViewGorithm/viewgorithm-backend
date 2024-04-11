@@ -1,21 +1,22 @@
 package vigo.com.viewgorithm.post.domain;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
-import vigo.com.viewgorithm.algorithm.domain.AlgorithmCategory;
+import lombok.*;
 import vigo.com.viewgorithm.user.domain.User;
 
+import java.time.LocalDateTime;
 import java.util.Date;
-import java.util.List;
 
 @Getter
-@Entity
 @Setter
+@Entity
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class Post{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long post_pk;
 
     @Column(columnDefinition = "VARCHAR(100)")
     private String title;
@@ -25,11 +26,15 @@ public class Post{
 
     @Column(name = "created_at")
     @Temporal(TemporalType.TIMESTAMP)
-    private Date created_at;
+    private LocalDateTime created_at;
 
+    @PrePersist
+    protected void onCreate() {
+        created_at = LocalDateTime.now(); // created_at을 현재시간으로 설정
+    }
 
-    @OneToMany
-    @JoinColumn(name = "user_pk", referencedColumnName = "회원 고유번호", columnDefinition = "int")
-    private List<User> user;
+    @ManyToOne // 게시글 다 : 유저 1
+    @JoinColumn(name = "user_pk", referencedColumnName = "user_pk")
+    private User user;
 
 }

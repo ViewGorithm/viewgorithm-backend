@@ -15,7 +15,6 @@ import vigo.com.viewgorithm.user.repository.UserRepository;
 
 @Service
 @RequiredArgsConstructor
-@Transactional(readOnly = true)
 @Slf4j
 
 public class UserProvider {
