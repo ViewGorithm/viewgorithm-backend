@@ -2,10 +2,9 @@ package vigo.com.viewgorithm.post.domain;
 
 import jakarta.persistence.*;
 import lombok.*;
-import vigo.com.viewgorithm.user.domain.User;
+import vigo.com.viewgorithm.user.join.domain.User;
 
 import java.time.LocalDateTime;
-import java.util.Date;
 
 @Getter
 @Setter

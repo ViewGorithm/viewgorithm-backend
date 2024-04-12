@@ -1,4 +1,4 @@
-package vigo.com.viewgorithm.jwt;
+package vigo.com.viewgorithm.user.jwt;
 
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -10,7 +10,6 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.util.StringUtils;
 import org.springframework.web.filter.GenericFilterBean;
-import vigo.com.viewgorithm.algorithm.service.JwtTokenProvider;
 
 import java.io.IOException;
 

@@ -1,4 +1,4 @@
-package vigo.com.viewgorithm.user.service;
+package vigo.com.viewgorithm.user.auth.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -6,12 +6,10 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import vigo.com.viewgorithm.user.domain.User;
-import vigo.com.viewgorithm.user.dto.CustomUserDetails;
-import vigo.com.viewgorithm.user.repository.UserRepository;
+import vigo.com.viewgorithm.user.join.domain.User;
+import vigo.com.viewgorithm.user.join.domain.repository.UserRepository;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor

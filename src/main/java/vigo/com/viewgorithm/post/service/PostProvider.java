@@ -5,8 +5,8 @@ import org.springframework.stereotype.Service;
 import vigo.com.viewgorithm.post.domain.Post;
 import vigo.com.viewgorithm.post.dto.PostDto;
 import vigo.com.viewgorithm.post.repository.PostRepository;
-import vigo.com.viewgorithm.user.domain.User;
-import vigo.com.viewgorithm.user.repository.UserRepository; // 예시로 사용한 UserRepository 클래스
+import vigo.com.viewgorithm.user.join.domain.User;
+import vigo.com.viewgorithm.user.join.domain.repository.UserRepository; // 예시로 사용한 UserRepository 클래스
 @Service
 @RequiredArgsConstructor
 public class PostProvider {
@@ -15,8 +15,8 @@ public class PostProvider {
     private final UserRepository userRepository; // UserRepository 주입
 
 
-    public String writePost(PostDto postDto) {
-        User user = userRepository.findById(Long.valueOf(postDto.getUserPk()))
+    public void writePost(PostDto postDto) {
+        User user = userRepository.findById((long) postDto.getUserPk())
                 .orElse(null);
 
         if (user == null) {
@@ -31,7 +31,6 @@ public class PostProvider {
                 .build();
         postRepository.save(post);
 
-        return "게시글 등록 완료";
     }
 
 }

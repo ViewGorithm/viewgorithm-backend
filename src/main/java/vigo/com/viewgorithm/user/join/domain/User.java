@@ -1,13 +1,10 @@
-package vigo.com.viewgorithm.user.domain;
+package vigo.com.viewgorithm.user.join.domain;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 @Getter
@@ -42,6 +39,10 @@ public class User implements UserDetails {
     @Column(name = "created_at")
     @Temporal(TemporalType.TIMESTAMP)
     private Date createdAt;
+
+//    @Enumerated(EnumType.STRING)
+//    private Authority authority;
+
     @PrePersist
     protected void onCreate() {
         createdAt = new Date(); // 현재 시간 설정
@@ -58,7 +59,7 @@ public class User implements UserDetails {
     }
     @Override
     public String getUsername() {
-        return null;
+        return this.getUserId();
     }
 
     @Override

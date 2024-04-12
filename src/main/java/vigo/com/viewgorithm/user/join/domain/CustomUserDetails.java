@@ -1,8 +1,7 @@
-package vigo.com.viewgorithm.user.dto;
+package vigo.com.viewgorithm.user.join.domain;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-import vigo.com.viewgorithm.user.domain.User;
 
 import java.util.ArrayList;
 import java.util.Collection;

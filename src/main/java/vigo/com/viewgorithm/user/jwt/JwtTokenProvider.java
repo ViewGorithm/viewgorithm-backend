@@ -1,4 +1,4 @@
-package vigo.com.viewgorithm.algorithm.service;
+package vigo.com.viewgorithm.user.jwt;
 
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.io.Decoders;
@@ -11,8 +11,9 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
-import vigo.com.viewgorithm.user.dto.JwtToken;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import vigo.com.viewgorithm.user.auth.api.dto.JwtDto;
+
 import java.security.Key;
 import java.util.Arrays;
 import java.util.Collection;
@@ -31,7 +32,7 @@ public class JwtTokenProvider {
     }
 
     // Member 정보를 가지고 AccessToken, RefreshToken을 생성하는 메서드
-    public JwtToken generateToken(Authentication authentication) {
+    public JwtDto generateToken(Authentication authentication) {
         // 권한 가져오기
         String authorities = authentication.getAuthorities().stream()
                 .map(GrantedAuthority::getAuthority)
@@ -43,7 +44,7 @@ public class JwtTokenProvider {
         Date accessTokenExpiresIn = new Date(now + 86400000);
         String accessToken = Jwts.builder()
                 .setSubject(authentication.getName())
-                .claim("auth", authorities)
+                .claim("user", authorities)
                 .setExpiration(accessTokenExpiresIn)
                 .signWith(key, SignatureAlgorithm.HS256)
                 .compact();
@@ -54,7 +55,7 @@ public class JwtTokenProvider {
                 .signWith(key, SignatureAlgorithm.HS256)
                 .compact();
 
-        return JwtToken.builder()
+        return JwtDto.builder()
                 .grantType("Bearer")
                 .accessToken(accessToken)
                 .refreshToken(refreshToken)
@@ -66,12 +67,12 @@ public class JwtTokenProvider {
         // Jwt 토큰 복호화
         Claims claims = parseClaims(accessToken);
 
-        if (claims.get("auth") == null) {
+        if (claims.get("user") == null) {
             throw new RuntimeException("권한 정보가 없는 토큰입니다.");
         }
 
         // 클레임에서 권한 정보 가져오기
-        Collection<? extends GrantedAuthority> authorities = Arrays.stream(claims.get("auth").toString().split(","))
+        Collection<? extends GrantedAuthority> authorities = Arrays.stream(claims.get("user").toString().split(","))
                 .map(SimpleGrantedAuthority::new)
                 .collect(Collectors.toList());
 

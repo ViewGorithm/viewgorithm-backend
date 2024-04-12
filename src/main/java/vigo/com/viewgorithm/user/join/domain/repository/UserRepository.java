@@ -1,10 +1,8 @@
-package vigo.com.viewgorithm.user.repository;
+package vigo.com.viewgorithm.user.join.domain.repository;
 
-import lombok.Builder;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
-import vigo.com.viewgorithm.user.domain.User;
-import vigo.com.viewgorithm.user.dto.UserDto;
+import vigo.com.viewgorithm.user.join.domain.User;
 
 import java.util.Optional;
 

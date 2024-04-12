@@ -1,4 +1,4 @@
-package vigo.com.viewgorithm.user.dto;
+package vigo.com.viewgorithm.user.join.api.dto;
 
 
 import lombok.Builder;
@@ -10,7 +10,7 @@ import java.util.Date;
 @Builder
 public class UserDto {
     private String userId;
-    private String passWord;
+    private String password;
     private String name;
     private Date birth;
     private String sex;

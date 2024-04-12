@@ -1,4 +1,4 @@
-package vigo.com.viewgorithm.user.dto;
+package vigo.com.viewgorithm.user.auth.api.dto;
 
 
 import lombok.Getter;
@@ -11,6 +11,6 @@ import lombok.ToString;
 @ToString
 @NoArgsConstructor
 public class SiginInDto {
-    private String userid;
+    private String userId;
     private String password;
 }
