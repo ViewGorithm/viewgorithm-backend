@@ -41,6 +41,8 @@ public class SecurityConfig {
                 .httpBasic(AbstractHttpConfigurer::disable)
                 // 경로별 인가 작업 - 모든 경로 경로 인가 해줌
                 .authorizeHttpRequests((request) -> request.requestMatchers("/user/**").permitAll().requestMatchers("/algorithm/**").authenticated())
+                // user 경로를 통한 경로는 전부다 허용, algorithm 부분은 로그인을 해야지 들어갈 수 있음
+
                 // add at 은 원하는 자리에 등록
                 // add before은 해당하는 필터 이전에 등록
                 // add after는 이후에

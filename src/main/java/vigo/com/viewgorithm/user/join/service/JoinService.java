@@ -18,11 +18,12 @@ public class JoinService {
     public String userJoin(UserDto userDto) {
 
         // username 중복 check -> repository 필요
-        userRepository.findByName(userDto.getUserId())
+        userRepository.findByUserId(userDto.getUserId())
                 .ifPresent(user -> {
                     throw new RuntimeException(userDto.getUserId() + "is already exists");
                 });
         User user = User.builder()
+                .userId(userDto.getUserId())
                 .password(userDto.getPassword())
                 .name(userDto.getName())
                 .birth(userDto.getBirth())

@@ -3,7 +3,6 @@ package vigo.com.viewgorithm.user.join.api.dto;
 
 import lombok.Builder;
 import lombok.Data;
-
 import java.util.Date;
 
 @Data
@@ -16,4 +15,8 @@ public class UserDto {
     private String sex;
     private String email;
     private Date createdAt;
+
+    // role 을 위한 userType
+    private String userType;
+
 }
