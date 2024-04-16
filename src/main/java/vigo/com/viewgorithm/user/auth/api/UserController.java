@@ -19,12 +19,14 @@ public class UserController {
     // 로그인 기능
     @PostMapping("/login")
     public JwtDto signIn(@RequestBody SiginInDto signInDto) {
+
         String username = signInDto.getUserId();
         String password = signInDto.getPassword();
         JwtDto jwtDto = userService.signIn(username, password);
         log.info("request username = {}, password = {}", username, password);
         log.info("jwtDto accessToken = {}, refreshToken = {}", jwtDto.getAccessToken(), jwtDto.getRefreshToken());
         return jwtDto;
+
     }
 
     @PostMapping("/test")

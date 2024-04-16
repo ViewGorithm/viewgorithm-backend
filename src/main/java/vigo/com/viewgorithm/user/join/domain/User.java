@@ -40,6 +40,10 @@ public class User implements UserDetails {
     @Temporal(TemporalType.TIMESTAMP)
     private Date createdAt;
 
+    @Column(name="user_type")
+    private String userType;
+
+
 //    @Enumerated(EnumType.STRING)
 //    private Authority authority;
 
