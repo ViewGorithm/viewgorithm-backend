@@ -10,56 +10,47 @@ import java.util.Collection;
 public class CustomUserDetails implements UserDetails {
 
     private final User userEntity;
-    // 생성자
+
     public CustomUserDetails(User userEntity) {
         this.userEntity = userEntity;
     }
-    // getAuthorities = 사용자 권한 반환하는 인터페이스 함수
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         Collection<GrantedAuthority> authorities = new ArrayList<>();
-        // ArrayList 를 사용하여 권한을 저장하는 collection
+        authorities.add(() -> "ROLE_USER");
 
-        // 사용자 권한 설정
-        switch (userEntity.getUserType()) {
-            case "user":
-                authorities.add(new SimpleGrantedAuthority("ROLE_USER"));
-                break;
-            case "admin":
-                authorities.add(new SimpleGrantedAuthority("ROLE_ADMIN"));
-                break;
-        }
+//        System.out.println(authorities);
         return authorities;
     }
 
     @Override
     public String getPassword() {
-        return null;
+        return userEntity.getPassword();
     }
 
     @Override
     public String getUsername() {
-        return null;
+        return userEntity.getUsername();
     }
 
     @Override
     public boolean isAccountNonExpired() {
-        return false;
+        return true; // 사용자 계정 만료 여부
     }
 
     @Override
     public boolean isAccountNonLocked() {
-        return false;
+        return true; // 사용자 계정 잠김 여부
     }
 
     @Override
     public boolean isCredentialsNonExpired() {
-        return false;
+        return true; // 사용자 자격 증명 만료 여부
     }
 
     @Override
     public boolean isEnabled() {
-        return false;
+        return true; // 사용자 활성화 여부
     }
 }

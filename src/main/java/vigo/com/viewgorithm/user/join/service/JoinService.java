@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import vigo.com.viewgorithm.user.join.domain.Role;
 import vigo.com.viewgorithm.user.join.domain.User;
 import vigo.com.viewgorithm.user.join.api.dto.UserDto;
 import vigo.com.viewgorithm.user.join.domain.repository.UserRepository;
@@ -30,6 +31,7 @@ public class JoinService {
                 .sex(userDto.getSex())
                 .email(userDto.getEmail())
                 .createdAt(userDto.getCreatedAt())
+                .role(Role.ROLE_USER)
                 .build();
         // save
         userRepository.save(user);
