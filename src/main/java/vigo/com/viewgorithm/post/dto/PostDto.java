@@ -8,7 +8,7 @@ import java.time.LocalDateTime;
 @Data
 @Builder
 public class PostDto {
-
+    private Long post_pk;
     private int userPk;
     private String title;
     private String content;

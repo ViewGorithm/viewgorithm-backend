@@ -14,7 +14,7 @@ public class PostProvider {
     private final PostRepository postRepository; // UserRepository 주입
     private final UserRepository userRepository; // UserRepository 주입
 
-
+    // 게시글 작성 
     public void writePost(PostDto postDto) {
         User user = userRepository.findById((long) postDto.getUserPk())
                 .orElse(null);
@@ -32,5 +32,13 @@ public class PostProvider {
         postRepository.save(post);
 
     }
-
+    // 게시글 삭제
+    public boolean deletePost(Long id) {
+        if (postRepository.existsById(id)) { // 해당 아이디를 가진 게시글 존재시
+            postRepository.deleteById(id); // 삭제
+            return true; // 삭제 여부 반환
+        } else {
+            return false; // 해당 ID 게시글을 찾지 못함
+        }
+    }
 }
