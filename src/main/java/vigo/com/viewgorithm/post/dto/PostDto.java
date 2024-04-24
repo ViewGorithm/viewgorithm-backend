@@ -9,7 +9,7 @@ import java.time.LocalDateTime;
 @Builder
 public class PostDto {
     private Long post_pk;
-    private int userPk;
+    private Long userPk;
     private String title;
     private String content;
     private LocalDateTime createdAt;

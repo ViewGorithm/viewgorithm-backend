@@ -9,12 +9,25 @@ import org.springframework.web.bind.annotation.*;
 import vigo.com.viewgorithm.post.dto.PostDto;
 import vigo.com.viewgorithm.post.service.PostProvider;
 
+import java.util.List;
+
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/user/post")
 public class PostController {
 
     private final PostProvider postProvider;
+
+
+    // 게시글 전체 조회
+    @GetMapping()
+    public List<PostDto> get(){
+
+        List<PostDto> postDtoList = postProvider.getPostList();
+
+        return ResponseEntity.ok(postDtoList).getBody();  // 200 OK와 함께 리스트 반환
+    }
+
 
     @PostMapping("/save")
     public ResponseEntity<String> save(@RequestBody PostDto postDto){

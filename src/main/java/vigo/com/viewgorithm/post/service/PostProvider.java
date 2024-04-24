@@ -7,12 +7,37 @@ import vigo.com.viewgorithm.post.dto.PostDto;
 import vigo.com.viewgorithm.post.repository.PostRepository;
 import vigo.com.viewgorithm.user.join.domain.User;
 import vigo.com.viewgorithm.user.join.domain.repository.UserRepository; // 예시로 사용한 UserRepository 클래스
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Service
 @RequiredArgsConstructor
 public class PostProvider {
 
     private final PostRepository postRepository; // UserRepository 주입
     private final UserRepository userRepository; // UserRepository 주입
+
+
+
+    // 전체 게시글 조회
+    public List<PostDto> getPostList() {
+        List<Post> posts = postRepository.findAll();  // 데이터베이스에서 모든 Post를 가져옵니다.
+        List<PostDto> postDtoList = new ArrayList<>();
+
+        for (Post post : posts) {
+            PostDto postDto = PostDto.builder()
+                    .post_pk(post.getPost_pk())
+                    .userPk(post.getUser().getUser_pk())
+                    .title(post.getTitle())
+                    .content(post.getContent())
+                    .createdAt(post.getCreated_at())
+                    .build();
+            postDtoList.add(postDto);  // PostDto를 리스트에 추가
+        }
+        return postDtoList;
+    }
 
     // 게시글 작성 
     public void writePost(PostDto postDto) {
