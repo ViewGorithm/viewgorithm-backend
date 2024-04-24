@@ -24,7 +24,7 @@ public class PostController {
         return ResponseEntity.ok().body("게시글 등록 완료.");
     }
 
-    @DeleteMapping("/delete/{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity<String> delete(@PathVariable Long id) { // 게시글 pk 받음
         boolean isDeleted = postProvider.deletePost(id); // 게시글 삭제 후 boolean 타입 리턴
 
