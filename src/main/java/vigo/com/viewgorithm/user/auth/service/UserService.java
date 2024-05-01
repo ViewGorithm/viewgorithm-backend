@@ -7,8 +7,12 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import vigo.com.viewgorithm.user.join.domain.User;
+import vigo.com.viewgorithm.user.join.domain.repository.UserRepository;
 import vigo.com.viewgorithm.user.jwt.JwtTokenProvider;
 import vigo.com.viewgorithm.user.auth.api.dto.JwtDto;
+
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -16,6 +20,7 @@ import vigo.com.viewgorithm.user.auth.api.dto.JwtDto;
 public class UserService {
     private final AuthenticationManagerBuilder authenticationManagerBuilder;
     private final JwtTokenProvider jwtTokenProvider;
+    private final UserRepository userRepository;
 
     @Transactional
     public JwtDto signIn(String username, String password) {
@@ -30,6 +35,11 @@ public class UserService {
         // 3. 인증 정보를 기반으로 JWT 토큰 생성
 
         return jwtTokenProvider.generateToken(authentication);
+    }
+
+    public Boolean findByUserId(Long id){
+        Optional<User> user = userRepository.findById(id);
+        return user.isPresent(); // 값이 존재할시 true 없을시 false
     }
 }
 

@@ -1,5 +1,6 @@
 package vigo.com.viewgorithm.post.service;
 
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import vigo.com.viewgorithm.post.domain.Post;
@@ -10,6 +11,8 @@ import vigo.com.viewgorithm.user.join.domain.repository.UserRepository; // 예�
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -18,6 +21,8 @@ public class PostProvider {
 
     private final PostRepository postRepository; // UserRepository 주입
     private final UserRepository userRepository; // UserRepository 주입
+
+
 
 
 
@@ -64,6 +69,39 @@ public class PostProvider {
             return true; // 삭제 여부 반환
         } else {
             return false; // 해당 ID 게시글을 찾지 못함
+        }
+    }
+
+
+
+    // 게시글 수정
+    @Transactional
+    public boolean updatePost(PostDto postDto){
+        Long postId = postDto.getPost_pk();
+
+        Optional<Post> postEntity = postRepository.findById(postId); // 엔티티 가져오기
+
+
+        if(postEntity.isPresent()){ // 존재하는지 확인
+            Post post = postEntity.get();
+
+            if (postDto.getContent() != null){ // postDto
+                post.setContent(postDto.getContent());
+            }
+            if(postDto.getTitle() != null){
+                post.setTitle(postDto.getTitle());
+            }
+
+            if(Objects.equals(postDto.getTitle(), "") && Objects.equals(post.getContent(), "")){
+                return false;  // Title의 값과
+            }
+
+
+            postRepository.save(post);
+            return true; // 수정 성공
+        }
+        else{
+            return false; // 수정 실패
         }
     }
 }
