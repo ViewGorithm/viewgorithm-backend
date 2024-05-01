@@ -74,34 +74,32 @@ public class PostProvider {
 
 
 
-    // 게시글 수정
     @Transactional
-    public boolean updatePost(PostDto postDto){
+    public void updatePost(PostDto postDto) {
         Long postId = postDto.getPost_pk();
 
-        Optional<Post> postEntity = postRepository.findById(postId); // 엔티티 가져오기
+        Optional<Post> postEntity = postRepository.findById(postId);
 
-
-        if(postEntity.isPresent()){ // 존재하는지 확인
-            Post post = postEntity.get();
-
-            if (postDto.getContent() != null){ // postDto
-                post.setContent(postDto.getContent());
-            }
-            if(postDto.getTitle() != null){
-                post.setTitle(postDto.getTitle());
-            }
-
-            if(Objects.equals(postDto.getTitle(), "") && Objects.equals(post.getContent(), "")){
-                return false;  // Title의 값과
-            }
-
-
-            postRepository.save(post);
-            return true; // 수정 성공
+        if (!postEntity.isPresent()) {
+            throw new PostNotFoundException("게시글을 찾을 수 없습니다.");
         }
-        else{
-            return false; // 수정 실패
+
+        Post post = postEntity.get();
+
+        if ((postDto.getTitle() == null || Objects.equals(postDto.getTitle().trim(), "")) &&
+                (postDto.getContent() == null || Objects.equals(postDto.getContent().trim(), ""))) {
+            throw new PostContentMissingException("제목 또는 내용을 입력해야 합니다.");
         }
+
+        if (postDto.getContent() != null && !Objects.equals(postDto.getContent().trim(), "")) {
+            post.setContent(postDto.getContent());
+        }
+
+        if (postDto.getTitle() != null && !Objects.equals(postDto.getTitle().trim(), "")) {
+            post.setTitle(postDto.getTitle());
+        }
+
+        postRepository.save(post);
     }
 }
+

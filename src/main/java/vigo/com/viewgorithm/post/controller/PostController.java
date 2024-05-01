@@ -7,6 +7,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import vigo.com.viewgorithm.post.dto.PostDto;
+import vigo.com.viewgorithm.post.service.PostContentMissingException;
+import vigo.com.viewgorithm.post.service.PostNotFoundException;
 import vigo.com.viewgorithm.post.service.PostProvider;
 import vigo.com.viewgorithm.user.auth.service.UserService;
 
@@ -53,22 +55,20 @@ public class PostController {
     // 게시글 수정
     @PostMapping("/{userId}")
     public ResponseEntity<String> update(@RequestBody PostDto postDto, @PathVariable Long userId) {
-        boolean isUpdated = postProvider.updatePost(postDto);
-        // 그니까 컨트롤러에서 해당 유저가 있는지 없는지 알기 위해서는 userService
-
         boolean isUser = userProvider.findByUserId(userId);
 
         if (!isUser) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND)
                     .body("해당하는 유저를 찾을 수 없습니다.");
         }
-
-        if (isUpdated) {
-            return ResponseEntity.ok("게시글 수정 완료.");
+        else try{
+            postProvider.updatePost(postDto);
+            return ResponseEntity.ok("게시글 수정 완료");
+        } catch (PostContentMissingException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+        } catch (PostNotFoundException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
         }
-        else {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("게시글을 찾을 수 없습니다.");
         }
     }
 
-    }
