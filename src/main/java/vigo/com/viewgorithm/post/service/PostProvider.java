@@ -22,10 +22,6 @@ public class PostProvider {
     private final PostRepository postRepository; // UserRepository 주입
     private final UserRepository userRepository; // UserRepository 주입
 
-
-
-
-
     // 전체 게시글 조회
     public List<PostDto> getPostList() {
         List<Post> posts = postRepository.findAll();  // 데이터베이스에서 모든 Post를 가져옵니다.
@@ -33,7 +29,7 @@ public class PostProvider {
 
         for (Post post : posts) {
             PostDto postDto = PostDto.builder()
-                    .post_pk(post.getPost_pk())
+                    .postPk(post.getId())
                     .userPk(post.getUser().getUser_pk())
                     .title(post.getTitle())
                     .content(post.getContent())
@@ -76,29 +72,32 @@ public class PostProvider {
 
     @Transactional
     public void updatePost(PostDto postDto) {
-        Long postId = postDto.getPost_pk();
+        Long postId = postDto.getPostPk();
 
         Optional<Post> postEntity = postRepository.findById(postId);
+        // PostEntity id를 통해 가져오기
 
+        // 없을시 예외처리
         if (!postEntity.isPresent()) {
             throw new PostNotFoundException("게시글을 찾을 수 없습니다.");
         }
 
+        // postEntity
         Post post = postEntity.get();
 
+        // title or content가 null 그리고 공백을 제거한 값이 없을시 커스텀 예외 발생
         if ((postDto.getTitle() == null || Objects.equals(postDto.getTitle().trim(), "")) &&
                 (postDto.getContent() == null || Objects.equals(postDto.getContent().trim(), ""))) {
             throw new PostContentMissingException("제목 또는 내용을 입력해야 합니다.");
         }
-
+        //내용이 null이 아니고 공백이 아닐시 내용 설정
         if (postDto.getContent() != null && !Objects.equals(postDto.getContent().trim(), "")) {
             post.setContent(postDto.getContent());
         }
-
+        // 제목의 경우
         if (postDto.getTitle() != null && !Objects.equals(postDto.getTitle().trim(), "")) {
             post.setTitle(postDto.getTitle());
         }
-
         postRepository.save(post);
     }
 }

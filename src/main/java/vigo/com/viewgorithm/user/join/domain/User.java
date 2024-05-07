@@ -17,6 +17,7 @@ public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long user_pk;
+    // user_pk 고유키
 
     @Column(name="user_id")
     private String userId;

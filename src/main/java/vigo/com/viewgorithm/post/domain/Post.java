@@ -15,7 +15,7 @@ import java.time.LocalDateTime;
 public class Post{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long post_pk;
+    private Long id;
 
     @Column(columnDefinition = "VARCHAR(100)")
     private String title;
