@@ -1,4 +1,4 @@
-package vigo.com.viewgorithm.user.jwt;
+package vigo.com.viewgorithm.member.jwt;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;

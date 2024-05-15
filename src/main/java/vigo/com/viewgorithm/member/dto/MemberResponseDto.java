@@ -1,9 +1,9 @@
-package vigo.com.viewgorithm.user.dto;
+package vigo.com.viewgorithm.member.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import vigo.com.viewgorithm.user.domain.Member;
+import vigo.com.viewgorithm.member.domain.Member;
 
 
 @Getter

@@ -1,4 +1,4 @@
-package vigo.com.viewgorithm.user.jwt;
+package vigo.com.viewgorithm.member.jwt;
 
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;

@@ -1,4 +1,4 @@
-package vigo.com.viewgorithm.user.jwt;
+package vigo.com.viewgorithm.member.jwt;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
@@ -22,7 +22,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
-import vigo.com.viewgorithm.user.dto.TokenDto;
+import vigo.com.viewgorithm.member.dto.TokenDto;
 
 //token을 만들어 제공해주는 클래스다.
 @Slf4j

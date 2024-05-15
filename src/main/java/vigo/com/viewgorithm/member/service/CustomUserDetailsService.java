@@ -1,4 +1,4 @@
-package vigo.com.viewgorithm.user.service;
+package vigo.com.viewgorithm.member.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
@@ -9,8 +9,8 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import vigo.com.viewgorithm.user.domain.Member;
-import vigo.com.viewgorithm.user.repository.MemberRepository;
+import vigo.com.viewgorithm.member.domain.Member;
+import vigo.com.viewgorithm.member.repository.MemberRepository;
 
 import java.util.Collections;
 

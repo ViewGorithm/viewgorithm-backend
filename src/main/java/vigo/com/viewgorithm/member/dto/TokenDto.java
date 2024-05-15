@@ -1,4 +1,4 @@
-package vigo.com.viewgorithm.user.dto;
+package vigo.com.viewgorithm.member.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

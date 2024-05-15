@@ -1,8 +1,8 @@
-package vigo.com.viewgorithm.user.repository;
+package vigo.com.viewgorithm.member.repository;
 
 
 import org.springframework.data.jpa.repository.JpaRepository;
-import vigo.com.viewgorithm.user.domain.Member;
+import vigo.com.viewgorithm.member.domain.Member;
 
 import java.util.Optional;
 

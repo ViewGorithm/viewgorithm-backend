@@ -1,12 +1,13 @@
-package vigo.com.viewgorithm.user.dto;
+package vigo.com.viewgorithm.member.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import vigo.com.viewgorithm.user.domain.Authority;
-import vigo.com.viewgorithm.user.domain.Member;
+import vigo.com.viewgorithm.member.domain.Authority;
+import vigo.com.viewgorithm.member.domain.Member;
+
 import java.util.Date;
 
 @Getter

@@ -1,4 +1,4 @@
-package vigo.com.viewgorithm.user.domain;
+package vigo.com.viewgorithm.member.domain;
 
 //enum 클래스를 사용하여 각각 상수를 만듦.
 public enum Authority {

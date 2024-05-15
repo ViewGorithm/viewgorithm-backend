@@ -2,7 +2,7 @@ package vigo.com.viewgorithm.post.domain;
 
 import jakarta.persistence.*;
 import lombok.*;
-import vigo.com.viewgorithm.user.domain.Member;
+import vigo.com.viewgorithm.member.domain.Member;
 
 import java.time.LocalDateTime;
 

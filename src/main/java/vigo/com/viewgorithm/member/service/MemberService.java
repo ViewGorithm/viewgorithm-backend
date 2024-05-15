@@ -1,4 +1,4 @@
-package vigo.com.viewgorithm.user.service;
+package vigo.com.viewgorithm.member.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -7,12 +7,12 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import vigo.com.viewgorithm.user.domain.Member;
-import vigo.com.viewgorithm.user.dto.MemberRequestDto;
-import vigo.com.viewgorithm.user.dto.MemberResponseDto;
-import vigo.com.viewgorithm.user.dto.TokenDto;
-import vigo.com.viewgorithm.user.jwt.TokenProvider;
-import vigo.com.viewgorithm.user.repository.MemberRepository;
+import vigo.com.viewgorithm.member.domain.Member;
+import vigo.com.viewgorithm.member.dto.MemberRequestDto;
+import vigo.com.viewgorithm.member.dto.MemberResponseDto;
+import vigo.com.viewgorithm.member.dto.TokenDto;
+import vigo.com.viewgorithm.member.jwt.TokenProvider;
+import vigo.com.viewgorithm.member.repository.MemberRepository;
 
 import java.util.Optional;
 

@@ -10,10 +10,10 @@ import org.springframework.security.config.annotation.web.configurers.AbstractHt
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import vigo.com.viewgorithm.user.jwt.JwtAccessDeniedHandler;
-import vigo.com.viewgorithm.user.jwt.JwtAuthenticationEntryPoint;
-import vigo.com.viewgorithm.user.jwt.JwtFilter;
-import vigo.com.viewgorithm.user.jwt.TokenProvider;
+import vigo.com.viewgorithm.member.jwt.JwtAccessDeniedHandler;
+import vigo.com.viewgorithm.member.jwt.JwtAuthenticationEntryPoint;
+import vigo.com.viewgorithm.member.jwt.JwtFilter;
+import vigo.com.viewgorithm.member.jwt.TokenProvider;
 
 @Configuration
 @EnableWebSecurity
@@ -39,7 +39,8 @@ public class SecurityConfig {
                 // http basic 인증 방식 disable
                 .httpBasic(AbstractHttpConfigurer::disable)
                 // 경로별 인가 작업 - 모든 경로 경로 인가 해줌
-                .authorizeHttpRequests((request) -> request.requestMatchers("/user/**").permitAll().anyRequest().hasAuthority("ROLE_USER"))
+                .authorizeHttpRequests((request) -> request.requestMatchers("/user/**").permitAll()
+                        .anyRequest().hasAuthority("ROLE_USER"))
                 // user 경로를 통한 경로는 전부다 허용, algorithm 부분은 로그인을 해야지 들어갈 수 있음
 
                 // add at 은 원하는 자리에 등록

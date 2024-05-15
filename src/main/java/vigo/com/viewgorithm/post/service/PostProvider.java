@@ -6,14 +6,13 @@ import org.springframework.stereotype.Service;
 import vigo.com.viewgorithm.post.domain.Post;
 import vigo.com.viewgorithm.post.dto.PostDto;
 import vigo.com.viewgorithm.post.repository.PostRepository;
-import vigo.com.viewgorithm.user.domain.Member;
-import vigo.com.viewgorithm.user.repository.MemberRepository;
+import vigo.com.viewgorithm.member.domain.Member;
+import vigo.com.viewgorithm.member.repository.MemberRepository;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor

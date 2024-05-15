@@ -1,7 +1,6 @@
 package vigo.com.viewgorithm.post.controller;
 
 
-import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -10,7 +9,7 @@ import vigo.com.viewgorithm.post.dto.PostDto;
 import vigo.com.viewgorithm.post.service.PostContentMissingException;
 import vigo.com.viewgorithm.post.service.PostNotFoundException;
 import vigo.com.viewgorithm.post.service.PostProvider;
-import vigo.com.viewgorithm.user.service.MemberService;
+import vigo.com.viewgorithm.member.service.MemberService;
 
 import java.util.List;
 
