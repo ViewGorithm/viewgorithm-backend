@@ -14,6 +14,8 @@ import vigo.com.viewgorithm.user.dto.TokenDto;
 import vigo.com.viewgorithm.user.jwt.TokenProvider;
 import vigo.com.viewgorithm.user.repository.MemberRepository;
 
+import java.util.Optional;
+
 
 @Service
 @RequiredArgsConstructor
@@ -57,4 +59,16 @@ public class MemberService {
 
       return tokenProvider.generateTokenDto(authentication);
   }
+
+
+  public boolean findByMemberId(Long MemberPk){
+
+    Optional<Member> member = memberRepository.findById(MemberPk);
+    return member.isPresent();
+
+  }
+
+
+
+
 }

@@ -26,7 +26,11 @@ public class MemberRequestDto {
             .userId(userId)
             .password(passwordEncoder.encode(password))
             .authority(Authority.ROLE_USER)
+            .sex(sex)
+            .email(email)
+            .name(name)
             .build();
+
   }
 
   public Member toAdmin(PasswordEncoder passwordEncoder) {
