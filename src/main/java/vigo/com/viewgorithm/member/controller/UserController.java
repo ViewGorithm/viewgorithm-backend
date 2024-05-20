@@ -1,5 +1,6 @@
 package vigo.com.viewgorithm.member.controller;
 
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -27,10 +28,17 @@ public class UserController {
         return ResponseEntity.ok(memberService.login(userRequestDto));
     }
 
+    @PostMapping("/user/refresh")
+    public ResponseEntity<TokenDto> refresh(HttpServletRequest request) {
+        return ResponseEntity.ok(memberService.refresh(request));
+    }
+
     @PostMapping("/admin/join")
     public ResponseEntity<MemberResponseDto> adminSignup(@RequestBody MemberRequestDto userRequestDto) {
         return ResponseEntity.ok(memberService.adminSignup(userRequestDto));
     }
+
+
 
     //test api
     @GetMapping("/user")
@@ -42,5 +50,10 @@ public class UserController {
     @GetMapping("/admin")
     public ResponseEntity<String> admin() {
         return ResponseEntity.ok("Hello Admin");
+    }
+
+    @GetMapping("/test")
+    public ResponseEntity<String> test() {
+        return ResponseEntity.ok("Hello");
     }
 }

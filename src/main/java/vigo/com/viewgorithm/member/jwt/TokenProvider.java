@@ -1,18 +1,8 @@
 package vigo.com.viewgorithm.member.jwt;
 
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.ExpiredJwtException;
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.MalformedJwtException;
-import io.jsonwebtoken.SignatureAlgorithm;
-import io.jsonwebtoken.UnsupportedJwtException;
+import io.jsonwebtoken.*;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
-import java.security.Key;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Date;
-import java.util.stream.Collectors;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -22,7 +12,14 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
+import vigo.com.viewgorithm.member.domain.Member;
 import vigo.com.viewgorithm.member.dto.TokenDto;
+
+import java.security.Key;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Date;
+import java.util.stream.Collectors;
 
 //token을 만들어 제공해주는 클래스다.
 @Slf4j
@@ -68,7 +65,37 @@ public class TokenProvider {
 
     String refreshToken = Jwts.builder()
             .setSubject(authentication.getName())
+            .setExpiration(new Date(now + REFRESH_TOKEN_EXPIRE_TIME))
+            .signWith(key, SignatureAlgorithm.HS256)
+            .compact();
+
+    //Dto로 변환하여 반환한다.
+    return TokenDto.builder()
+            .grantType(BEARER_TYPE)
+            .accessToken(accessToken)
+            .refreshToken(refreshToken)
+            .build();
+  }
+
+  public TokenDto regenerateToken(Member member) {
+    //authenticaton 객체에서 권한을 가져와서 String 타입 변수에 저장하는 코드다.
+    /*GrantedAuthority타입 객체에서 권한(authority)만 String 형식으로 추출한다.
+     * collect로 필터링된 요소들을 쉼표로 구분하여 저장한다.*/
+    String authorities = member.getAuthority().toString();
+
+    long now = (new Date()).getTime();
+
+    //accessToken의 만료시한을 정해놓고 발행한다.
+    Date accessTokenExpiresIn = new Date(now + ACCESS_TOKEN_EXPIRE_TIME);
+    String accessToken = Jwts.builder()
+            .setSubject(member.getId().toString())
             .claim(AUTHORITIES_KEY, authorities)
+            .setExpiration(accessTokenExpiresIn)
+            .signWith(key, SignatureAlgorithm.HS256)
+            .compact();
+
+    String refreshToken = Jwts.builder()
+            .setSubject(member.getId().toString())
             .setExpiration(new Date(now + REFRESH_TOKEN_EXPIRE_TIME))
             .signWith(key, SignatureAlgorithm.HS256)
             .compact();
@@ -128,5 +155,10 @@ public class TokenProvider {
     } catch (ExpiredJwtException e) {
       return e.getClaims();
     }
+  }
+
+  public String getUserIdFromRefreshToken(String refreshToken) {
+    Claims claims = parseClaims(refreshToken);
+    return claims.getSubject();
   }
 }
