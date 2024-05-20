@@ -20,4 +20,10 @@ public class AlgorithmController {
         return new ResponseEntity<>(provider.getAlgorithm_Codes(language), HttpStatus.OK);
     }
 
+
+    @GetMapping("/kuntek")
+    public String a (){
+        return "Hi";
+    }
+
 }

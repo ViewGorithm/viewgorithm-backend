@@ -31,13 +31,18 @@ public class JwtFilter extends OncePerRequestFilter {
     SecurityContextHolder.getContext().setAuthentication(authentication);
     위의 부분은 authentication 객체를 securitycontext에 등록하는 코드다.
     * */
+
+    // 토큰 로그아웃 = Jwt 블랙리스트
+    private final JwtBlacklistService jwtBlacklistService;
+
+
     @Override
     public void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
             throws IOException, ServletException {
 
         String jwt = resolveToken(request);
 
-        if (StringUtils.hasText(jwt) && tokenProvider.validateToken(jwt)) {
+        if (StringUtils.hasText(jwt) && tokenProvider.validateToken(jwt) && !jwtBlacklistService.isTokenBlacklisted(jwt)) {
             Authentication authentication = tokenProvider.getAuthentication(jwt);
             SecurityContextHolder.getContext().setAuthentication(authentication);
         }
