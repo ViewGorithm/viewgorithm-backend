@@ -1,7 +1,9 @@
-package vigo.com.viewgorithm.member.jwt;
+package vigo.com.viewgorithm.member.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import vigo.com.viewgorithm.member.jwt.JwtBlacklistService;
+
 import java.util.Map;
 
     @RestController
@@ -9,6 +11,7 @@ import java.util.Map;
         @Autowired
         private JwtBlacklistService jwtBlacklistService;
 
+        // 블랙리스트에 Refresh 토큰이 들어갔는지 안들어갔는지 Check (안되는 상황)
         @PostMapping("/check")
         public ResponseEntity<?> checkRefreshToken(@RequestBody Map<String, String> requestBody) {
             String refreshToken = requestBody.get("refreshToken");

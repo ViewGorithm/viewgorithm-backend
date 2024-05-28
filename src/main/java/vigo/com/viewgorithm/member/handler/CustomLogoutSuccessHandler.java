@@ -1,4 +1,4 @@
-package vigo.com.viewgorithm.member.jwt;
+package vigo.com.viewgorithm.member.handler;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -8,6 +8,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.logout.LogoutSuccessHandler;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
+import vigo.com.viewgorithm.member.jwt.JwtBlacklistService;
 
 import java.io.IOException;
 import java.time.Duration;
@@ -24,8 +25,8 @@ public class CustomLogoutSuccessHandler implements LogoutSuccessHandler {
         String refreshToken = resolveRefreshToken(request);
         if (StringUtils.hasText(refreshToken)) {
             // 리프레시 토큰만 블랙리스트에 추가
-            // jwtBlacklistService.blacklistToken(refreshToken, Duration.ofMinutes(30)); // 30분 동안 블랙리스트 유지
-            jwtBlacklistService.blacklistToken(refreshToken, null); // 영구히 블랙리스트에 추가
+            jwtBlacklistService.blacklistToken(refreshToken, Duration.ofMinutes(30)); // 예시: 30분 동안 블랙리스트에 추가
+            //jwtBlacklistService.blacklistToken(refreshToken, null); // 영구히 블랙리스트에 추가
         }
 
         response.setStatus(HttpServletResponse.SC_OK);

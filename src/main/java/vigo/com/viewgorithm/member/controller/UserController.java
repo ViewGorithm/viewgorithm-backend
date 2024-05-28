@@ -30,9 +30,14 @@ public class UserController {
 
     @PostMapping("/user/refresh")
     public ResponseEntity<TokenDto> refresh(HttpServletRequest request) {
-        return ResponseEntity.ok(memberService.refresh(request));
+        try {
+            TokenDto tokenDto = memberService.refresh(request);
+            return ResponseEntity.ok(tokenDto);
+        } catch (Exception e) {
+            TokenDto errorResponse = new TokenDto(); // 에러 응답으로 빈 TokenDto 객체를 반환
+            return ResponseEntity.badRequest().body(errorResponse);
+        }
     }
-
     @PostMapping("/admin/join")
     public ResponseEntity<MemberResponseDto> adminSignup(@RequestBody MemberRequestDto userRequestDto) {
         return ResponseEntity.ok(memberService.adminSignup(userRequestDto));

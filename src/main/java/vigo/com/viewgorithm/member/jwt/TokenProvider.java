@@ -4,7 +4,9 @@ import io.jsonwebtoken.*;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
@@ -28,6 +30,8 @@ public class TokenProvider {
 
   private static final String AUTHORITIES_KEY = "auth";
   private static final String BEARER_TYPE = "Bearer";
+  private static final String ACCESS_TOKEN_PREFIX = "accessToken:";
+  private static final String REFRESH_TOKEN_PREFIX = "refreshToken:";
   private static final long ACCESS_TOKEN_EXPIRE_TIME = 1000 * 60 * 30; // 30분, 만료시간을 의미.
   private static final long REFRESH_TOKEN_EXPIRE_TIME = 1000 * 60 * 60 * 24 * 14; // 14일
 
@@ -38,6 +42,10 @@ public class TokenProvider {
   * "HMAC-SHA 알고리즘을 통해 secret key에 대해 암호화를 시켜주는 메소드"라고 한다.
   * 즉 이 생성자는
   * jwt.secret에 저장한 것을 가져옴 -> base64 자료형으로 decoding -> hmacShaKeyFor()로 다시 암호화 및 key로 지정*/
+
+  @Autowired
+  private RedisTemplate<String, Object> redisTemplate;
+
   public TokenProvider(@Value("${jwt.secret}") String secretKey) {
     byte[] keyBytes = Decoders.BASE64.decode(secretKey);
     this.key = Keys.hmacShaKeyFor(keyBytes);

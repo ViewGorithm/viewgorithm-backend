@@ -12,6 +12,8 @@ import vigo.com.viewgorithm.member.domain.Member;
 import vigo.com.viewgorithm.member.dto.MemberRequestDto;
 import vigo.com.viewgorithm.member.dto.MemberResponseDto;
 import vigo.com.viewgorithm.member.dto.TokenDto;
+import vigo.com.viewgorithm.member.error.RefreshTokenInvalidException;
+import vigo.com.viewgorithm.member.jwt.JwtBlacklistService;
 import vigo.com.viewgorithm.member.jwt.TokenProvider;
 import vigo.com.viewgorithm.member.repository.MemberRepository;
 
@@ -26,6 +28,7 @@ public class MemberService {
     private final MemberRepository memberRepository;
     private final PasswordEncoder passwordEncoder;
     private final TokenProvider tokenProvider;
+    private final JwtBlacklistService jwtBlacklistService;
 
     @Transactional
     public MemberResponseDto signup(MemberRequestDto memberRequestDto) {
@@ -60,19 +63,25 @@ public class MemberService {
         return tokenProvider.generateTokenDto(authentication);
     }
 
+
+
     @Transactional
-    public TokenDto refresh(HttpServletRequest request) {
+    public TokenDto refresh(HttpServletRequest request) throws RefreshTokenInvalidException {
         String refreshToken = request.getHeader("Authorization").substring(7);
         if (!tokenProvider.validateToken(refreshToken)) {
             throw new RuntimeException("Refresh Token이 유효하지 않습니다.");
         }
         String userId = tokenProvider.getUserIdFromRefreshToken(refreshToken);
-        System.out.println("***" + userId);
         Member member = memberRepository.findById(Long.valueOf(userId)).orElseThrow(() -> new RuntimeException("회원을 찾을 수 없습니다."));
-//        UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(member.getUserId(), member.getPassword());
-        System.out.println("***" + member.getUserId());
-//        Authentication authentication = authenticationManagerBuilder.getObject().authenticate(authenticationToken);
+
+
+        // 만약 refresh 토큰이 블랙리스트에 있다면
+        if(jwtBlacklistService.isTokenBlacklisted(refreshToken)){
+            throw new RefreshTokenInvalidException("This Token is invalid. User has Logged out.");
+        } // 예외 발생
+
         return tokenProvider.regenerateToken(member);
+        // 없다면 다시 토큰을 발급해준다.
     }
 
     @Transactional(readOnly = true)
