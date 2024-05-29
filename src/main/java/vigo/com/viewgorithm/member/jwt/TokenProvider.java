@@ -33,7 +33,7 @@ public class TokenProvider {
   private static final String ACCESS_TOKEN_PREFIX = "accessToken:";
   private static final String REFRESH_TOKEN_PREFIX = "refreshToken:";
   private static final long ACCESS_TOKEN_EXPIRE_TIME = 1000 * 60 * 30; // 30분, 만료시간을 의미.
-  private static final long REFRESH_TOKEN_EXPIRE_TIME = 1000 * 60 * 60 * 24 * 14; // 14일
+  private static final long REFRESH_TOKEN_EXPIRE_TIME = 1000 * 60 * 60 * 24 * 7; // 7일
 
   private final Key key;
 
