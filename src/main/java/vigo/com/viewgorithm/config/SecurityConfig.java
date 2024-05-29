@@ -11,8 +11,12 @@ import org.springframework.security.config.annotation.web.configurers.AbstractHt
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
 import vigo.com.viewgorithm.member.handler.CustomLogoutSuccessHandler;
 import vigo.com.viewgorithm.member.jwt.*;
+
+import java.util.List;
 
 @Configuration
 @EnableWebSecurity
@@ -31,6 +35,22 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
+                .cors(c -> {
+                            CorsConfigurationSource source = request -> {
+                                var cors = new CorsConfiguration();
+                                //허용할 origin
+                                cors.addAllowedOriginPattern("*");
+                                //허용할 method(CRUD)
+                                cors.setAllowedMethods(List.of("*"));
+                                //허용할 헤더
+                                cors.setAllowedHeaders(List.of("*"));
+                                cors.setAllowCredentials(true);
+                                cors.setMaxAge(3600L);
+                                return cors;
+                            };
+                            c.configurationSource(source);
+                        }
+                )
                 .csrf(AbstractHttpConfigurer::disable)
                 .formLogin(AbstractHttpConfigurer::disable)
                 .httpBasic(AbstractHttpConfigurer::disable)
