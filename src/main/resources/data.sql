@@ -11,6 +11,7 @@ values ("Quick", "Sort");
 
 -- 로그인 Test (유저 아이디 insert문)
 
+-- algorithm_code 시간 복잡도 insert
 
 
 
@@ -19,7 +20,7 @@ values ("Quick", "Sort");
 -- algorithm_code insert문
 
 
-INSERT INTO algorithm_codes (algorithm_name, c_code, c_sharp_code, java_code, python_code)
+INSERT INTO algorithm_codes (algorithm_name, c_code, c_sharp_code, java_code, python_code, time_complexity)
 VALUES ('Bubble',
 '
 void swap(int* arr, int i, int j)
@@ -127,11 +128,13 @@ def bubble_sort(arr):
                 arr[i], arr[i + 1] = arr[i + 1], arr[i]
                 last_swap = i
         end = last_swap
-');
+',
+
+        'O(N log N)');
 
 
 
-INSERT INTO algorithm_codes (algorithm_name, c_code, c_sharp_code, java_code, python_code)
+INSERT INTO algorithm_codes (algorithm_name, c_code, c_sharp_code, java_code, python_code, time_complexity)
 VALUES ('Merge',
 '
 # include <stdio.h>
@@ -309,11 +312,12 @@ def merge_sort(arr):
             arr[i] = temp[i - low]
 
     return sort(0, len(arr))
-'
+',
+        'O(n^2)'
 );
 
 
-INSERT INTO algorithm_codes (algorithm_name, c_code, c_sharp_code, java_code, python_code)
+INSERT INTO algorithm_codes (algorithm_name, c_code, c_sharp_code, java_code, python_code, time_complexity)
 VALUES ('Quick',
 '
 # include <stdio.h>
@@ -463,4 +467,6 @@ def quick_sort(arr):
         else:
             equal_arr.append(num)
     return quick_sort(lesser_arr) + equal_arr + quick_sort(greater_arr)
-');
+'
+       ,
+        'O(N log N)');

@@ -42,7 +42,7 @@ public class JwtFilter extends OncePerRequestFilter {
 
         String jwt = resolveToken(request);
 
-        if (StringUtils.hasText(jwt) && tokenProvider.validateToken(jwt) && !jwtBlacklistService.isTokenBlacklisted(jwt)) {
+        if (StringUtils.hasText(jwt) && tokenProvider.validateToken(jwt)) {
             if (!request.getRequestURI().equals("/user/refresh")) {
                 Authentication authentication = tokenProvider.getAuthentication(jwt);
                 SecurityContextHolder.getContext().setAuthentication(authentication);

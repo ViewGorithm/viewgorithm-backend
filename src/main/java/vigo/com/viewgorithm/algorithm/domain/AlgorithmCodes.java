@@ -24,8 +24,14 @@ public class AlgorithmCodes {
     @Column(columnDefinition = "TEXT")
     private String java_code;
 
+    @Column(columnDefinition = "TEXT")
+    private String time_complexity;
+
     @OneToOne
     @JoinColumn(name = "algorithm_name", referencedColumnName = "algorithm_name", columnDefinition = "varchar(100)")
     private AlgorithmCategory algorithmName;
+
+
+
 
 }

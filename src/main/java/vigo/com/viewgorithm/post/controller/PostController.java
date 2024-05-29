@@ -11,6 +11,7 @@ import vigo.com.viewgorithm.post.service.PostNotFoundException;
 import vigo.com.viewgorithm.post.service.PostProvider;
 import vigo.com.viewgorithm.member.service.MemberService;
 
+import java.util.Collections;
 import java.util.List;
 
 @RestController
@@ -23,20 +24,37 @@ public class PostController {
 
     // 게시글 전체 조회
     @GetMapping()
+
     public List<PostDto> get() {
+        try {
+            List<PostDto> postDtoList = postProvider.getPostList();
 
-        List<PostDto> postDtoList = postProvider.getPostList();
+            // postDtoList가 null이면 예외를 던집니다.
+            if(postDtoList == null){
+                throw new NullPointerException();
+            }
+            return ResponseEntity.ok(postDtoList).getBody();  // 200 OK와 함께 리스트 반환
 
-        return ResponseEntity.ok(postDtoList).getBody();  // 200 OK와 함께 리스트 반환
+        } catch(NullPointerException e){
+            throw new RuntimeException("Failed to fetch post list", e);
+        }
     }
-
 
     @PostMapping("/save")
     public ResponseEntity<String> save(@RequestBody PostDto postDto) {
+        try {
+            // 게시글 유효성 검사
+            if (postDto == null || postDto.getTitle() == null || postDto.getContent() == null) {
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("게시글 제목 또는 내용이 누락되었습니다.");
+            }
+            // 게시글 등록 기능 수행
+            postProvider.writePost(postDto);
 
-        postProvider.writePost(postDto); // 게시글 등록 기능 수행
-
-        return ResponseEntity.ok().body("게시글 등록 완료.");
+            return ResponseEntity.ok().body("게시글 등록 완료.");
+        } catch (Exception e) {
+            // 예외가 발생한 경우
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("게시글 등록 중 오류가 발생했습니다.");
+        }
     }
 
     // 게시글 삭제

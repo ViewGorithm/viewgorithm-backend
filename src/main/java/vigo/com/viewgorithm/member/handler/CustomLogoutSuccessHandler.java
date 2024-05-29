@@ -36,11 +36,10 @@ public class CustomLogoutSuccessHandler implements LogoutSuccessHandler {
     private String resolveRefreshToken(HttpServletRequest request) {
         // 프론트엔드에서 전송한 리프레시 토큰을 추출하는 방법에 따라 구현합니다.
         // 여기에서는 단순히 요청 헤더에서 추출하는 예시를 제공합니다.
-        String refreshToken = request.getHeader("Refresh-Token");
-        if (StringUtils.hasText(refreshToken)) {
-            return refreshToken;
+        String refreshToken = request.getHeader("Authorization");
+        if (StringUtils.hasText(refreshToken) && refreshToken.startsWith("Bearer ")) {
+            return refreshToken.substring(7);
         }
-
         return null;
     }
 }

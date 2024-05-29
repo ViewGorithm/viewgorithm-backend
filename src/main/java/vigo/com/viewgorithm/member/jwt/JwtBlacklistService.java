@@ -10,20 +10,13 @@ import java.time.Duration;
 @Service
 public class JwtBlacklistService {
 
-    private static final String BLACKLIST_PREFIX = "blacklist:";
     private static final String REFRESH_BLACKLIST_PREFIX = "refresh_blacklist:";
     @Autowired
     private RedisTemplate<String, Object> redisTemplate;
 
     public void blacklistToken(String token, Duration duration) {
         ValueOperations<String, Object> ops = redisTemplate.opsForValue();
-        ops.set(BLACKLIST_PREFIX + token, true, duration);
-    }
-
-    public boolean isTokenBlacklisted(String token) {
-        ValueOperations<String, Object> ops = redisTemplate.opsForValue();
-        Boolean isBlacklisted = (Boolean) ops.get(BLACKLIST_PREFIX + token);
-        return isBlacklisted != null && isBlacklisted;
+        ops.set(REFRESH_BLACKLIST_PREFIX + token, true, duration);
     }
 
     public boolean isRefreshTokenBlacklisted(String refreshToken) {

@@ -2,6 +2,7 @@ package vigo.com.viewgorithm.member.controller;
 
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -10,10 +11,12 @@ import org.springframework.web.bind.annotation.RestController;
 import vigo.com.viewgorithm.member.dto.MemberResponseDto;
 import vigo.com.viewgorithm.member.dto.TokenDto;
 import vigo.com.viewgorithm.member.dto.MemberRequestDto;
+import vigo.com.viewgorithm.member.error.RefreshTokenInvalidException;
 import vigo.com.viewgorithm.member.service.MemberService;
 
 
 @RestController
+@Slf4j
 @RequiredArgsConstructor
 public class UserController {
     private final MemberService memberService;
@@ -21,12 +24,14 @@ public class UserController {
     @PostMapping("/user/join")
     public ResponseEntity<MemberResponseDto> signup(@RequestBody MemberRequestDto userRequestDto) {
         return ResponseEntity.ok(memberService.signup(userRequestDto));
-    }
+    } // 예외처리 o
 
     @PostMapping("/user/login")
     public ResponseEntity<TokenDto> login(@RequestBody MemberRequestDto userRequestDto) {
         return ResponseEntity.ok(memberService.login(userRequestDto));
-    }
+    } // 예외처리 o
+
+
 
     @PostMapping("/user/refresh")
     public ResponseEntity<TokenDto> refresh(HttpServletRequest request) {
@@ -34,14 +39,17 @@ public class UserController {
             TokenDto tokenDto = memberService.refresh(request);
             return ResponseEntity.ok(tokenDto);
         } catch (Exception e) {
-            TokenDto errorResponse = new TokenDto(); // 에러 응답으로 빈 TokenDto 객체를 반환
-            return ResponseEntity.badRequest().body(errorResponse);
+            log.error("this token is invaild.");
+            return ResponseEntity.internalServerError().build();
         }
     }
+    // 예외처리 o
+
     @PostMapping("/admin/join")
     public ResponseEntity<MemberResponseDto> adminSignup(@RequestBody MemberRequestDto userRequestDto) {
         return ResponseEntity.ok(memberService.adminSignup(userRequestDto));
     }
+    // 예외처리 o
 
 
 
