@@ -5,6 +5,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import vigo.com.viewgorithm.post.domain.Post;
 import vigo.com.viewgorithm.post.dto.PostDto;
+import vigo.com.viewgorithm.post.dto.PostUploadDto;
+import vigo.com.viewgorithm.post.error.PostContentMissingException;
+import vigo.com.viewgorithm.post.error.PostNotFoundException;
 import vigo.com.viewgorithm.post.repository.PostRepository;
 import vigo.com.viewgorithm.member.domain.Member;
 import vigo.com.viewgorithm.member.repository.MemberRepository;
@@ -29,9 +32,7 @@ public class PostProvider {
         for (Post post : posts) {
             PostDto postDto = PostDto.builder()
                     .postPk(post.getId())
-                    .memberPk(post.getMember().getId())
                     .title(post.getTitle())
-                    .content(post.getContent())
                     .createdAt(post.getCreated_at())
                     .build();
             postDtoList.add(postDto);  // PostDto를 리스트에 추가
@@ -40,7 +41,7 @@ public class PostProvider {
     }
 
     // 게시글 작성
-    public void writePost(PostDto postDto) {
+    public void writePost(PostUploadDto postDto) {
         Member member = memberRepository.findById((long) postDto.getMemberPk())
                 .orElse(null);
 
@@ -70,8 +71,8 @@ public class PostProvider {
 
 
     @Transactional
-    public void updatePost(PostDto postDto) {
-        Long postId = postDto.getPostPk();
+    public void updatePost(PostUploadDto postUploadDto) {
+        Long postId = postUploadDto.getPostPk();
 
         Optional<Post> postEntity = postRepository.findById(postId);
         // PostEntity id를 통해 가져오기
@@ -85,17 +86,17 @@ public class PostProvider {
         Post post = postEntity.get();
 
         // title or content가 null 그리고 공백을 제거한 값이 없을시 커스텀 예외 발생
-        if ((postDto.getTitle() == null || Objects.equals(postDto.getTitle().trim(), "")) &&
-                (postDto.getContent() == null || Objects.equals(postDto.getContent().trim(), ""))) {
+        if ((postUploadDto.getTitle() == null || Objects.equals(postUploadDto.getTitle().trim(), "")) &&
+                (postUploadDto.getContent() == null || Objects.equals(postUploadDto.getContent().trim(), ""))) {
             throw new PostContentMissingException("제목 또는 내용을 입력해야 합니다.");
         }
         //내용이 null이 아니고 공백이 아닐시 내용 설정
-        if (postDto.getContent() != null && !Objects.equals(postDto.getContent().trim(), "")) {
-            post.setContent(postDto.getContent());
+        if (postUploadDto.getContent() != null && !Objects.equals(postUploadDto.getContent().trim(), "")) {
+            post.setContent(postUploadDto.getContent());
         }
         // 제목의 경우
-        if (postDto.getTitle() != null && !Objects.equals(postDto.getTitle().trim(), "")) {
-            post.setTitle(postDto.getTitle());
+        if (postUploadDto.getTitle() != null && !Objects.equals(postUploadDto.getTitle().trim(), "")) {
+            post.setTitle(postUploadDto.getTitle());
         }
         postRepository.save(post);
     }

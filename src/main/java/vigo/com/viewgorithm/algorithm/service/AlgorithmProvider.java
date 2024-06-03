@@ -27,6 +27,7 @@ public class AlgorithmProvider {
                 .c_sharp_code(algorithmCodes.getC_sharp_code())
                 .java_code(algorithmCodes.getJava_code())
                 .python_code(algorithmCodes.getPython_code())
+                .time_complexity(algorithmCodes.getTime_complexity())
                 .build();
     }
 

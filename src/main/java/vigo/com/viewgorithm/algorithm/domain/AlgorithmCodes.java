@@ -24,7 +24,7 @@ public class AlgorithmCodes {
     @Column(columnDefinition = "TEXT")
     private String java_code;
 
-    @Column(columnDefinition = "TEXT")
+    @Column
     private String time_complexity;
 
     @OneToOne

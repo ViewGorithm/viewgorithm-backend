@@ -6,12 +6,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import vigo.com.viewgorithm.post.dto.PostDto;
-import vigo.com.viewgorithm.post.service.PostContentMissingException;
-import vigo.com.viewgorithm.post.service.PostNotFoundException;
+import vigo.com.viewgorithm.post.dto.PostUploadDto;
 import vigo.com.viewgorithm.post.service.PostProvider;
 import vigo.com.viewgorithm.member.service.MemberService;
 
-import java.util.Collections;
 import java.util.List;
 
 @RestController
@@ -39,16 +37,16 @@ public class PostController {
             throw new RuntimeException("Failed to fetch post list", e);
         }
     }
-
+    // 게시글 저장
     @PostMapping("/save")
-    public ResponseEntity<String> save(@RequestBody PostDto postDto) {
+    public ResponseEntity<String> save(@RequestBody PostUploadDto postUploadDto) {
         try {
             // 게시글 유효성 검사
-            if (postDto == null || postDto.getTitle() == null || postDto.getContent() == null) {
+            if (postUploadDto == null || postUploadDto.getTitle() == null || postUploadDto.getContent() == null) {
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("게시글 제목 또는 내용이 누락되었습니다.");
             }
             // 게시글 등록 기능 수행
-            postProvider.writePost(postDto);
+            postProvider.writePost(postUploadDto);
 
             return ResponseEntity.ok().body("게시글 등록 완료.");
         } catch (Exception e) {
@@ -70,22 +68,22 @@ public class PostController {
     }
 
     // 게시글 수정
-    @PostMapping("/{userId}")
-    public ResponseEntity<String> update(@RequestBody PostDto postDto, @PathVariable Long MemberPk) {
-        boolean isUser = memberService.findByMemberId(MemberPk);
-
-        if (!isUser) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                    .body("해당하는 유저를 찾을 수 없습니다.");
-        }
-        else try{
-            postProvider.updatePost(postDto);
-            return ResponseEntity.ok("게시글 수정 완료");
-        } catch (PostContentMissingException e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
-        } catch (PostNotFoundException e) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
-        }
-        }
+//    @PostMapping("/{userId}")
+//    public ResponseEntity<String> update(@RequestBody PostDto postDto, @PathVariable Long MemberPk) {
+//        boolean isUser = memberService.findByMemberId(MemberPk);
+//
+//        if (!isUser) {
+//            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+//                    .body("해당하는 유저를 찾을 수 없습니다.");
+//        }
+//        else try{
+//            postProvider.updatePost(postDto);
+//            return ResponseEntity.ok("게시글 수정 완료");
+//        } catch (PostContentMissingException e) {
+//            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+//        } catch (PostNotFoundException e) {
+//            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+//        }
+//        }
     }
 

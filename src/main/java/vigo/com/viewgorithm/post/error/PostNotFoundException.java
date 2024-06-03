@@ -1,4 +1,4 @@
-package vigo.com.viewgorithm.post.service;
+package vigo.com.viewgorithm.post.error;
 
 public class PostNotFoundException extends RuntimeException {
     public PostNotFoundException(String message) {

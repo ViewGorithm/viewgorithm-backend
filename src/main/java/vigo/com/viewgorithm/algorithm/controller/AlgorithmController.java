@@ -22,9 +22,9 @@ public class AlgorithmController {
             AlgorithmCodesDto codesDto = provider.getAlgorithm_Codes(language);
 
             return new ResponseEntity<>(codesDto, HttpStatus.OK);
-            // 코드가 null이 아닌경우에는 ok 상태와 함께 데이터 보내기
+            // 코드가 있을 경우 
         }
-        catch (NullPointerException e) {
+        catch (NullPointerException e) { // 없을 경우 예외처리 완료
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Algorithm codes not found", e);
         }
     }

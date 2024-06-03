@@ -4,13 +4,13 @@ import lombok.Data;
 
 import java.time.LocalDateTime;
 
+// 게시글 업로드 Dto
 @Data
 @Builder
-// 게시글 전체 조회 Dto
-public class PostDto {
-
+public class PostUploadDto {
     private Long postPk;
+    private Long memberPk;
+    private String content;
     private String title;
     private LocalDateTime createdAt;
-
 }
