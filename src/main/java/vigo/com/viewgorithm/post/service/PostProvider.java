@@ -42,15 +42,15 @@ public class PostProvider {
 
     // 게시글 작성
     public void writePost(PostUploadDto postDto) {
-        Member member = memberRepository.findById((long) postDto.getMemberPk())
-                .orElse(null);
-
-        if (member == null) {
-            throw new IllegalArgumentException("유저를 찾을 수 없습니다.");
-        }
+//        Member member = memberRepository.findById((long) postDto.getMemberPk())
+//                .orElse(null);
+//
+//        if (member == null) {
+//            throw new IllegalArgumentException("유저를 찾을 수 없습니다.");
+//        }
 
         Post post = Post.builder()
-                .member(member) // 유저 엔티티 설정
+//                .member(member) // 유저 엔티티 설정
                 .title(postDto.getTitle())
                 .content(postDto.getContent())
                 .created_at(postDto.getCreatedAt())

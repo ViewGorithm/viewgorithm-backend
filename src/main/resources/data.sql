@@ -1,3 +1,52 @@
+-- post insert문
+insert into post(created_at,title,content)
+values("2024-05-01","처음에 다들 어떤식으로 공부하셨나요", "진짜 어떻게 공부해야할지 감이 1도 안잡혀요..");
+
+insert into post(created_at,title,content)
+values("2024-05-04","나만의 알고리즘 시간 복잡도 암기", "사실 그딴거 없어요 외울필요도 없고 걍 이해하세요");
+
+insert into post(created_at,title,content)
+values("2024-05-07","코딩에 있어서 알고리즘이 그렇게 중요한가요?", "실무에서는 안쓰지 않나요?");
+
+insert into post(created_at,title,content)
+values("2024-05-07","자료구조와 알고리즘 초보자를 위한 입문 TIP" ,"자세한건 네이버에..");
+
+insert into post(created_at,title,content)
+values("2024-05-08","해시 테이블의 원리와 실전 활용" , "자세한건 네이버에..");
+
+insert into post(created_at,title,content)
+values("2024-05-09","트리 자료구조의 이해와 활용법", "구글링하세요");
+
+insert into post(created_at,title,content)
+values("2024-05-10","실제 업무에서 알고리즘을 사용할줄은 상상못했네요", "초보자일때는 안건들지만 중급자가 되면서 메모리 활용, 시간 축약에 목매게 되더라고요");
+
+insert into post(created_at,title,content)
+values("2024-05-11","저같이 코테 준비하시는 분 있나요?", "백준 알고리즘 문제만 100번 푸는중이에여");
+
+insert into post(created_at,title,content)
+values("2024-05-12","싸피 준비하시는 분?", "혹시 계시나요?");
+
+insert into post(created_at,title,content)
+values("2024-05-13","우테코 합격 후기(코테 알고리즘 공부 팁)", "이해하는게 제일 중요하더라고요, 암기하지말고 이해하세요");
+
+insert into post(created_at,title,content)
+values("2024-05-13","국비도 혹시 코테 공부 하나요?", "국비는 그냥 코딩만 하나요?");
+
+insert into post(created_at,title,content)
+values("2024-05-13","알고리즘 이해하는거 저는 포기했읍니다..", "다음생에 하죠");
+
+insert into post(created_at,title,content)
+values("2024-05-14","퀵이고 버블이고 힙이고 나발이고","드럽게 어렵네여");
+
+insert into post(created_at,title,content)
+values("2024-05-14","대기업 코테 에서는 무조건 알고리즘만 나와요?", "아님 백준 브론즈 문제는 안나오나요?");
+
+insert into post(created_at,title,content)
+values("2024-05-14","알고리즘 분야만 딱 정리해놓은 인프런 강의 추천점여", "너무 비싸지 않은걸로 추천좀..");
+
+
+
+
 -- category_insert문
 
 insert into algorithm_category (algorithm_name, category_name)
