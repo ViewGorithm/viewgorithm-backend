@@ -5,6 +5,7 @@ import lombok.*;
 import vigo.com.viewgorithm.member.domain.Member;
 
 import java.time.LocalDateTime;
+import java.util.Date;
 
 @Getter
 @Setter
@@ -25,12 +26,7 @@ public class Post{
 
     @Column(name = "created_at")
     @Temporal(TemporalType.TIMESTAMP)
-    private LocalDateTime created_at;
-
-    @PrePersist
-    protected void onCreate() {
-        created_at = LocalDateTime.now(); // created_at을 현재시간으로 설정
-    }
+    private Date created_at;
 
     @ManyToOne // 게시글 다 : 유저 1
     @JoinColumn(name = "member_id", referencedColumnName = "id")

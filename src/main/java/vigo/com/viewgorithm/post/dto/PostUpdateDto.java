@@ -2,16 +2,14 @@ package vigo.com.viewgorithm.post.dto;
 import lombok.Builder;
 import lombok.Data;
 
-import java.time.LocalDateTime;
 import java.util.Date;
 
+// 게시글 수정 Dto
 @Data
 @Builder
-// 게시글 전체 조회
-public class PostDto {
-
-    private Long id;
+public class PostUpdateDto {
+    private Long postPk;
+    private String content;
     private String title;
     private Date createdAt;
-
 }
