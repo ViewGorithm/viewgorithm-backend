@@ -55,8 +55,7 @@ public class SecurityConfig {
                 .formLogin(AbstractHttpConfigurer::disable)
                 .httpBasic(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests((request) -> request
-                        .requestMatchers("/user/**").permitAll()
-                        .anyRequest().authenticated())
+                        .requestMatchers("/**").permitAll())
                 .addFilterBefore(new JwtFilter(tokenProvider, jwtBlacklistService), UsernamePasswordAuthenticationFilter.class) // 수정된 부분
                 .exceptionHandling((exception) -> exception
                         .authenticationEntryPoint(jwtAuthenticationEntryPoint)

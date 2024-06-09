@@ -4,15 +4,16 @@ import lombok.Builder;
 import lombok.Data;
 
 import java.time.LocalDateTime;
+import java.util.Date;
 
 // 게시글 상세내용 Dto
 @Data
 @Builder
 public class PostDetailDto {
 
-    private Long postPk;
+    private Long id;
     private String title;
-    private LocalDateTime createdAt;
+    private Date createdAt;
     private String content;
 
 }

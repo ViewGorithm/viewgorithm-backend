@@ -4,6 +4,7 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import vigo.com.viewgorithm.post.domain.Post;
+import vigo.com.viewgorithm.post.dto.PostDetailDto;
 import vigo.com.viewgorithm.post.dto.PostDto;
 import vigo.com.viewgorithm.post.dto.PostUploadDto;
 import vigo.com.viewgorithm.post.error.PostContentMissingException;
@@ -12,10 +13,8 @@ import vigo.com.viewgorithm.post.repository.PostRepository;
 import vigo.com.viewgorithm.member.domain.Member;
 import vigo.com.viewgorithm.member.repository.MemberRepository;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
+import java.time.ZoneId;
+import java.util.*;
 
 @Service
 @RequiredArgsConstructor
@@ -31,13 +30,33 @@ public class PostProvider {
 
         for (Post post : posts) {
             PostDto postDto = PostDto.builder()
-                    .postPk(post.getId())
+                    .id(post.getId())
                     .title(post.getTitle())
-                    .createdAt(post.getCreated_at())
+                    .createdAt(Date
+                            .from(post.getCreated_at().atZone(ZoneId.systemDefault()).toInstant()))
                     .build();
             postDtoList.add(postDto);  // PostDto를 리스트에 추가
         }
         return postDtoList;
+    }
+
+    //개별 게시글 조회
+    public PostDetailDto getPostDetail(Long id) {
+        Optional<Post> postEntity = postRepository.findById(id); // id를 통해 PostEntity를 가져옵니다.
+
+        if (!postEntity.isPresent()) { // 없을시 예외처리
+            throw new PostNotFoundException("게시글을 찾을 수 없습니다.");
+        }
+
+        Post post = postEntity.get(); // PostEntity를 가져옵니다.
+
+        return PostDetailDto.builder()
+                .id(post.getId())
+                .title(post.getTitle())
+                .createdAt(Date
+                        .from(post.getCreated_at().atZone(ZoneId.systemDefault()).toInstant()))
+                .content(post.getContent())
+                .build();
     }
 
     // 게시글 작성

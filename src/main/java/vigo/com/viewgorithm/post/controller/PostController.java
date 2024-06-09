@@ -5,6 +5,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import vigo.com.viewgorithm.post.dto.PostDetailDto;
 import vigo.com.viewgorithm.post.dto.PostDto;
 import vigo.com.viewgorithm.post.dto.PostUploadDto;
 import vigo.com.viewgorithm.post.service.PostProvider;
@@ -22,7 +23,6 @@ public class PostController {
 
     // 게시글 전체 조회
     @GetMapping()
-
     public List<PostDto> get() {
         try {
             List<PostDto> postDtoList = postProvider.getPostList();
@@ -37,6 +37,24 @@ public class PostController {
             throw new RuntimeException("Failed to fetch post list", e);
         }
     }
+
+    // 게시글 개별 조회
+    @GetMapping("/{id}")
+    public ResponseEntity<PostDetailDto> get(@PathVariable Long id) {
+        try {
+            PostDetailDto postDetailDto = postProvider.getPostDetail(id);
+
+            // postDetailDto가 null이면 예외를 던집니다.
+            if(postDetailDto == null){
+                throw new NullPointerException();
+            }
+            return ResponseEntity.ok(postDetailDto);  // 200 OK와 함께 postDetailDto 반환
+
+        } catch(NullPointerException e){
+            throw new RuntimeException("Failed to fetch post detail", e);
+        }
+    }
+
     // 게시글 저장
     @PostMapping("/save")
     public ResponseEntity<String> save(@RequestBody PostUploadDto postUploadDto) {
