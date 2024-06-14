@@ -44,7 +44,7 @@ public class SecurityConfig {
                                 cors.setAllowedMethods(List.of("*"));
                                 //허용할 헤더
                                 cors.setAllowedHeaders(List.of("*"));
-                                cors.setAllowCredentials(true);
+                                cors.setAllowCredentials(false);
                                 cors.setMaxAge(3600L);
                                 return cors;
                             };
