@@ -13,6 +13,8 @@ import vigo.com.viewgorithm.post.error.PostNotFoundException;
 import vigo.com.viewgorithm.post.repository.PostRepository;
 import vigo.com.viewgorithm.member.repository.MemberRepository;
 
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.*;
 
 @Service
@@ -61,7 +63,7 @@ public class PostProvider {
         Post post = Post.builder()
                 .title(postDto.getTitle())
                 .content(postDto.getContent())
-                .created_at(postDto.getCreatedAt())
+                .created_at(Date.from(LocalDateTime.now().atZone(ZoneId.systemDefault()).toInstant()))  // 현재 시간 설정
                 .build();
         postRepository.save(post);
     }
